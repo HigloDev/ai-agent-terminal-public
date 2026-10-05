@@ -1,0 +1,26 @@
+name: Source checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: product/native/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: node scripts/check-public.mjs
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+        working-directory: product/native
+      - run: npm test
+        working-directory: product/native
+      - run: python -m unittest discover -p "test_*.py"
+        working-directory: product/native

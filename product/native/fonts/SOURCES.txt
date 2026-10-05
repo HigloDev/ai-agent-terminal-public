@@ -1,0 +1,4 @@
+Noto Sans SC. Downloaded unmodified from Google Fonts on 2026-10-04.
+Regular: https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG9_FnYw.ttf
+SemiBold: https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaGwHCnYw.ttf
+License: OFL.txt
