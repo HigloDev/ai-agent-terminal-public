@@ -17,7 +17,7 @@ TRIMUI Smart Pro 原生掌机客户端，通过局域网连接电脑已有的 Co
 电脑测试需要 Node.js >=20.9（推荐 22）及 Python 3.13。本次在 Windows 的独立源码副本中安装并测试，没有复制原电脑凭据、录音、模型或 node_modules。
 
 ```powershell
-git clone https://github.com/higgle123/ai-agent-terminal-public.git
+git clone https://github.com/HigloDev/ai-agent-terminal-public.git
 cd ai-agent-terminal-public/product/native
 npm ci --ignore-scripts
 npm test
