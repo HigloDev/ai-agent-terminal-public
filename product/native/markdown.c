@@ -1,6 +1,5 @@
 #include "markdown.h"
 #include "media.h"
-#include "icons-data.h"
 #include "vendor/md4c/md4c.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,12 +20,13 @@ static struct {
   char *source;int width,height;unsigned generation;
 } view;
 typedef struct {
-  int x,y,left,right,lineheight,ink,heading,bold,em,link,strike,inlinecode,code,quote;
+  int x,y,left,right,lineheight,ink,heading,bold,em,link,strike,inlinecode,code,quote,compact;
   int depth,ordered[32],number[32],table,cols,cell,rowY,rowBottom,rowBox,head;
   int codeBox,quoteBox[32],quoteDepth,html,image;
   SDL_Surface *line;
 } Layout;
 static SDL_Color foreground={228,230,235,255},secondary={167,174,184,255},accent={113,184,255,255};
+static const GmTheme *palette=&gm_themes[0];
 static TTF_Font *face(Layout *p){return p->heading==4?view.meta:p->heading==1?view.heading:p->heading?view.subhead:p->code||p->inlinecode?view.code:view.body;}
 static int box(int x,int y,int w,int h,SDL_Color c){
   if(view.boxesN>=MAX_BOXES)return -1;
@@ -76,17 +76,17 @@ static void emit(Layout *p,const char *s,int length){
     if(p->x+w>p->right&&p->ink)flush(p,0);
     if(!p->ink&&!p->code&&n==1&&token[0]==' ')continue;
     if(!p->line){p->line=SDL_CreateRGBSurfaceWithFormat(0,view.width,96,32,SDL_PIXELFORMAT_ARGB8888);if(!p->line)return;SDL_FillRect(p->line,NULL,0);}
-    SDL_Color color=p->link?accent:p->quote?secondary:foreground;
-    if(p->inlinecode){SDL_Rect bg={p->x,2,w,h+4};SDL_FillRect(p->line,&bg,SDL_MapRGBA(p->line->format,49,53,62,255));color=(SDL_Color){233,195,156,255};}
+    SDL_Color color=p->heading==4?secondary:p->link?accent:p->quote?secondary:foreground;
+    if(p->inlinecode){SDL_Rect bg={p->x,2,w,h+4};SDL_FillRect(p->line,&bg,SDL_MapRGBA(p->line->format,palette->code.r,palette->code.g,palette->code.b,255));color=palette->warning;}
     SDL_Surface *glyphs=TTF_RenderUTF8_Blended(f,token,color);
-    if(glyphs){SDL_Rect dest={p->x,4,0,0};SDL_BlitSurface(glyphs,NULL,p->line,&dest);SDL_FreeSurface(glyphs);}
-    p->x+=w;p->ink=1;if(h+12>p->lineheight)p->lineheight=h+12;
+    if(glyphs){SDL_Rect dest={p->x,p->compact?(p->heading==4?-2:2):4,0,0};SDL_BlitSurface(glyphs,NULL,p->line,&dest);SDL_FreeSurface(glyphs);}
+    int spacing=p->compact?(p->heading==4?0:4):12;p->x+=w;p->ink=1;if(h+spacing>p->lineheight)p->lineheight=h+spacing;
   }
 }
 static int enter_block(MD_BLOCKTYPE t,void *detail,void *data){
   Layout *p=data;
   switch(t){
-  case MD_BLOCK_H:flush(p,0);p->y+=12;p->heading=((MD_BLOCK_H_DETAIL*)detail)->level;break;
+  case MD_BLOCK_H:flush(p,0);p->y+=p->compact?4:12;p->heading=((MD_BLOCK_H_DETAIL*)detail)->level;break;
   case MD_BLOCK_P:if(p->ink&&!p->depth)flush(p,0);break;
   case MD_BLOCK_UL:case MD_BLOCK_OL:
     flush(p,0);if(p->depth<31){p->ordered[p->depth]=t==MD_BLOCK_OL;p->number[p->depth]=t==MD_BLOCK_OL?((MD_BLOCK_OL_DETAIL*)detail)->start:0;p->depth++;}margin(p);break;
@@ -98,15 +98,15 @@ static int enter_block(MD_BLOCKTYPE t,void *detail,void *data){
     else snprintf(mark,sizeof(mark),"•");
     emit(p,mark,strlen(mark));p->x=p->left+8;p->left+=8;break;}
   case MD_BLOCK_QUOTE:
-    flush(p,0);p->y+=6;if(p->quoteDepth<32)p->quoteBox[p->quoteDepth++]=box(p->left,p->y,3,1,(SDL_Color){88,97,111,255});p->quote++;margin(p);break;
+    flush(p,0);p->y+=6;if(p->quoteDepth<32)p->quoteBox[p->quoteDepth++]=box(p->left,p->y,3,1,palette->border);p->quote++;margin(p);break;
   case MD_BLOCK_CODE:{
-    flush(p,0);p->y+=8;p->codeBox=box(p->left,p->y,view.width-p->left,1,(SDL_Color){27,31,38,255});p->code=1;margin(p);p->y+=10;
+    flush(p,0);p->y+=8;p->codeBox=box(p->left,p->y,view.width-p->left,1,palette->code);p->code=1;margin(p);p->y+=10;
     MD_BLOCK_CODE_DETAIL *code=detail;if(code->lang.size){emit(p,code->lang.text,code->lang.size);flush(p,0);p->y+=6;}break;}
-  case MD_BLOCK_HR:flush(p,0);p->y+=14;box(p->left,p->y,p->right-p->left,1,(SDL_Color){66,71,80,255});p->y+=18;break;
+  case MD_BLOCK_HR:flush(p,0);p->y+=14;box(p->left,p->y,p->right-p->left,1,palette->border);p->y+=18;break;
   case MD_BLOCK_HTML:p->html++;break;
   case MD_BLOCK_TABLE:flush(p,0);p->table=1;p->cols=((MD_BLOCK_TABLE_DETAIL*)detail)->col_count;if(p->cols<1)p->cols=1;p->y+=10;break;
   case MD_BLOCK_THEAD:p->head=1;break;
-  case MD_BLOCK_TR:p->rowY=p->y;p->rowBottom=p->y+44;p->cell=0;p->rowBox=box(0,p->y,view.width,1,p->head?(SDL_Color){43,48,57,255}:(SDL_Color){30,34,41,255});break;
+  case MD_BLOCK_TR:p->rowY=p->y;p->rowBottom=p->y+44;p->cell=0;p->rowBox=box(0,p->y,view.width,1,p->head?palette->selected:palette->surface);break;
   case MD_BLOCK_TH:case MD_BLOCK_TD:p->left=p->cell*view.width/p->cols+12;p->right=(p->cell+1)*view.width/p->cols-12;if(p->right<=p->left)p->right=p->left+1;p->x=p->left;p->y=p->rowY+6;break;
   default:break;
   }return view.linesN>=MAX_LINES?1:0;
@@ -114,8 +114,8 @@ static int enter_block(MD_BLOCKTYPE t,void *detail,void *data){
 static int leave_block(MD_BLOCKTYPE t,void *detail,void *data){
   (void)detail;Layout *p=data;
   switch(t){
-  case MD_BLOCK_H:flush(p,0);p->heading=0;p->y+=10;break;
-  case MD_BLOCK_P:flush(p,0);p->y+=p->depth?4:14;break;
+  case MD_BLOCK_H:flush(p,0);p->heading=0;p->y+=p->compact?6:10;break;
+  case MD_BLOCK_P:flush(p,0);p->y+=p->depth?4:p->compact?4:14;break;
   case MD_BLOCK_LI:flush(p,0);p->y+=6;margin(p);break;
   case MD_BLOCK_UL:case MD_BLOCK_OL:flush(p,0);if(p->depth)p->depth--;margin(p);p->y+=6;break;
   case MD_BLOCK_QUOTE:flush(p,0);if(p->quoteDepth)boxend(p->quoteBox[--p->quoteDepth],p->y);p->quote--;margin(p);p->y+=10;break;
@@ -123,8 +123,8 @@ static int leave_block(MD_BLOCKTYPE t,void *detail,void *data){
   case MD_BLOCK_HTML:p->html--;break;
   case MD_BLOCK_TH:case MD_BLOCK_TD:flush(p,1);if(p->y+6>p->rowBottom)p->rowBottom=p->y+6;p->cell++;break;
   case MD_BLOCK_TR:
-    p->y=p->rowBottom;boxend(p->rowBox,p->y);box(0,p->y-1,view.width,1,(SDL_Color){64,69,79,255});
-    for(int c=1;c<p->cols;c++){box(c*view.width/p->cols,p->rowY,1,p->y-p->rowY,(SDL_Color){64,69,79,255});}break;
+    p->y=p->rowBottom;boxend(p->rowBox,p->y);box(0,p->y-1,view.width,1,palette->border);
+    for(int c=1;c<p->cols;c++){box(c*view.width/p->cols,p->rowY,1,p->y-p->rowY,palette->border);}break;
   case MD_BLOCK_THEAD:p->head=0;break;
   case MD_BLOCK_TABLE:p->table=0;margin(p);p->y+=18;break;
   default:break;
@@ -166,7 +166,7 @@ static int on_text(MD_TEXTTYPE t,const MD_CHAR *s,MD_SIZE n,void *data){
   }else emit(p,s,n);return 0;
 }
 static void clear_cache(void){for(int i=0;i<view.linesN;i++)SDL_DestroyTexture(view.lines[i].texture);view.linesN=view.boxesN=view.height=0;free(view.source);view.source=NULL;}
-int markdown_init(SDL_Renderer *r,const char *path){snprintf(font_path,sizeof(font_path),"%s",path);view.renderer=r;view.body=TTF_OpenFont(path,26);const char*bold=access("fonts/NotoSansSC-SemiBold.ttf",R_OK)==0?"fonts/NotoSansSC-SemiBold.ttf":path;view.heading=TTF_OpenFont(bold,36);view.subhead=TTF_OpenFont(bold,30);view.meta=TTF_OpenFont(bold,24);view.code=TTF_OpenFont(path,24);return view.body&&view.heading&&view.subhead&&view.code&&view.meta?0:-1;}
+int markdown_init(SDL_Renderer *r,const char *path){snprintf(font_path,sizeof(font_path),"%s",path);view.renderer=r;view.body=TTF_OpenFont(path,26);const char*bold=access("fonts/NotoSansSC-SemiBold.ttf",R_OK)==0?"fonts/NotoSansSC-SemiBold.ttf":path;view.heading=TTF_OpenFont(bold,36);view.subhead=TTF_OpenFont(bold,30);view.meta=TTF_OpenFont(bold,22);view.code=TTF_OpenFont(path,24);return view.body&&view.heading&&view.subhead&&view.code&&view.meta?0:-1;}
 
 void markdown_set_chat(int enabled){if(chat_mode!=enabled){chat_mode=enabled;clear_cache();}}
 /* Presentation only. Fenced content is not treated as a message delimiter. */
@@ -190,30 +190,23 @@ int markdown_layout(const char *source,int width){
   const char*body=strchr(role,'\n');if(!body)body=role+strlen(role);else body++;
   const char*next=role_line(body);size_t len=next?(size_t)(next-body):strlen(body);
   if(next){while(len&&(body[len-1]==10||body[len-1]==13))len--;if(len>=3&&!memcmp(body+len-3,"---",3)&&(len==3||body[len-4]==10)){len-=3;while(len&&(body[len-1]==10||body[len-1]==13))len--;}}
-  int user=!strncmp(role,"### 你",7),offset=user?width/4:72,local=width-offset-24;
-  if(!user)local=width-148;
-  if(user&&len<400){const char*one=body;size_t n=len;while(n&&(*one=='\n'||*one=='\r')){one++;n--;}while(n&&(one[n-1]=='\n'||one[n-1]=='\r'))n--;if(n&&!memchr(one,'\n',n)){char shortText[401];memcpy(shortText,one,n);shortText[n]=0;int tw=0;TTF_SizeUTF8(view.body,shortText,&tw,NULL);if(tw<local){local=tw<240?240:tw;offset=width-local-24;}}}
-
-  int firstLine=view.linesN,firstBox=view.boxesN;view.width=local;
-  Layout p={0};p.right=local;p.codeBox=-1;p.y=y;p.heading=4;
+  /* Both roles use the same full reading width. Only actual code/table/media
+   * content creates protected boxes; ordinary messages stay on the page. */
+  Layout p={0};p.right=width;p.codeBox=-1;p.y=y;p.heading=4;p.compact=1;
   char label[160];size_t labelLen=(size_t)(body-role)-4;while(labelLen&&(role+4)[labelLen-1]=='\n')labelLen--;if(labelLen>=sizeof(label))labelLen=sizeof(label)-1;memcpy(label,role+4,labelLen);label[labelLen]=0;
 
-  if(!user&&view.linesN<MAX_LINES){SDL_Surface*av=SDL_CreateRGBSurfaceWithFormatFrom((void*)gm_icons[11],48,48,32,192,SDL_PIXELFORMAT_RGBA32);if(av){SDL_Texture*t=SDL_CreateTextureFromSurface(view.renderer,av);SDL_FreeSurface(av);if(t){SDL_SetTextureColorMod(t,115,221,189);view.lines[view.linesN++]=(Line){t,p.y+4,38,-64,38};}}}
-  emit(&p,label,strlen(label));flush(&p,0);p.heading=0;p.y+=8;
-  int b=box(-16,p.y-4,local+32,1,user?(SDL_Color){27,53,47,255}:(SDL_Color){30,35,43,255});
-  if(b>=0){view.boxes[b].radius=12;}p.y+=10;md_parse(body,len,&parser,&p);flush(&p,0);p.y+=8;boxend(b,p.y);y=p.y+24;
-  for(int i=firstLine;i<view.linesN;i++)view.lines[i].x+=offset;
-  for(int i=firstBox;i<view.boxesN;i++)view.boxes[i].rect.x+=offset;
-  view.width=width;role=next;
+  emit(&p,label,strlen(label));flush(&p,0);p.heading=0;
+  md_parse(body,len,&parser,&p);flush(&p,0);y=p.y+4;role=next;
  }
  view.height=y;return view.height;
 }
 
 void markdown_draw(int x,int y,int width,int height,int scroll){
-  SDL_Rect clip={x,y,width,height};SDL_RenderSetClipRect(view.renderer,&clip);
+  SDL_Rect previous,clip={x,y,width,height};int clipped=SDL_RenderIsClipEnabled(view.renderer);SDL_RenderGetClipRect(view.renderer,&previous);if(clipped){SDL_Rect combined;SDL_IntersectRect(&previous,&clip,&combined);clip=combined;}SDL_RenderSetClipRect(view.renderer,&clip);
   for(int i=0;i<view.boxesN;i++){Box b=view.boxes[i];b.rect.x+=x;b.rect.y+=y-scroll;if(b.rect.y+b.rect.h<y||b.rect.y>y+height)continue;SDL_SetRenderDrawColor(view.renderer,b.color.r,b.color.g,b.color.b,255);if(!b.radius)SDL_RenderFillRect(view.renderer,&b.rect);else{int r=b.radius;for(int dy=0;dy<b.rect.h;dy++){int yy=dy<r?r-dy-1:dy>=b.rect.h-r?dy-(b.rect.h-r):0,edge=0;while(edge<r&&(r-edge)*(r-edge)+yy*yy>r*r)edge++;SDL_RenderDrawLine(view.renderer,b.rect.x+edge,b.rect.y+dy,b.rect.x+b.rect.w-edge-1,b.rect.y+dy);}}}
   for(int i=0;i<view.linesN;i++){Line *l=&view.lines[i];SDL_Rect dst={x+l->x,y+l->y-scroll,l->w,l->h};if(dst.y+dst.h<y||dst.y>y+height)continue;SDL_RenderCopy(view.renderer,l->texture,NULL,&dst);}
-  SDL_RenderSetClipRect(view.renderer,NULL);
+  SDL_RenderSetClipRect(view.renderer,clipped?&previous:NULL);
 }
-void markdown_set_large(int enabled){if(large_font==enabled)return;large_font=enabled;clear_cache();TTF_CloseFont(view.body);TTF_CloseFont(view.heading);TTF_CloseFont(view.subhead);TTF_CloseFont(view.code);TTF_CloseFont(view.meta);view.body=TTF_OpenFont(font_path,enabled?32:26);const char*bold=access("fonts/NotoSansSC-SemiBold.ttf",R_OK)==0?"fonts/NotoSansSC-SemiBold.ttf":font_path;view.heading=TTF_OpenFont(bold,enabled?42:36);view.subhead=TTF_OpenFont(bold,enabled?36:30);view.meta=TTF_OpenFont(bold,enabled?28:24);view.code=TTF_OpenFont(font_path,enabled?28:24);}
+void markdown_set_theme(const GmTheme *theme){if(palette==theme)return;palette=theme;foreground=theme->ink;secondary=theme->muted;accent=theme->link;clear_cache();}
+void markdown_set_large(int enabled){if(large_font==enabled)return;large_font=enabled;clear_cache();TTF_CloseFont(view.body);TTF_CloseFont(view.heading);TTF_CloseFont(view.subhead);TTF_CloseFont(view.code);TTF_CloseFont(view.meta);view.body=TTF_OpenFont(font_path,enabled?32:26);const char*bold=access("fonts/NotoSansSC-SemiBold.ttf",R_OK)==0?"fonts/NotoSansSC-SemiBold.ttf":font_path;view.heading=TTF_OpenFont(bold,enabled?42:36);view.subhead=TTF_OpenFont(bold,enabled?36:30);view.meta=TTF_OpenFont(bold,enabled?24:22);view.code=TTF_OpenFont(font_path,enabled?28:24);}
 void markdown_free(void){clear_cache();TTF_CloseFont(view.body);TTF_CloseFont(view.heading);TTF_CloseFont(view.subhead);TTF_CloseFont(view.code);TTF_CloseFont(view.meta);}

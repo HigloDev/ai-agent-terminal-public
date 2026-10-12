@@ -19,6 +19,13 @@ int main(int argc,char **argv){
   markdown_draw(0,0,700,400,0);markdown_draw(0,0,700,400,height-200);
 
   markdown_set_chat(1);
+  const char*compact="### 你 · 10:42\n\n请检查。\n\n---\n\n### Codex · 10:44\n\n已检查。\n";
+  int compactHeight=markdown_layout(compact,1216);assert(compactHeight<210);
+  Uint32 bg=SDL_MapRGB(screen->format,9,11,13);SDL_SetRenderDrawColor(r,9,11,13,255);SDL_RenderClear(r);markdown_draw(32,64,1216,620,0);SDL_RenderPresent(r);
+  int firstInk=1280;for(int y=64;y<120;y++)for(int x=0;x<1280;x++)if(((Uint32*)screen->pixels)[y*screen->w+x]!=bg&&x<firstInk)firstInk=x;
+  assert(firstInk>=32&&firstInk<48); /* User begins at the full-page left margin. */
+  assert(((Uint32*)screen->pixels)[150*screen->w+1100]==bg); /* No full-message bubble. */
+  markdown_set_large(1);assert(markdown_layout(compact,1216)<250);markdown_set_large(0);
   const char *chat="### 你\n\n请检查当前任务。\n\n---\n\n### Codex · 本轮回复\n\n## 已完成检查\n\n正文与 **强调**。\n\n~~~text\n### 你\nfenced content stays in the code block\n~~~\n\n| 文件 | 状态 |\n| --- | --- |\n| main.c | 完成 |\n\n### 你 · 原会话已受理\n\n下一步。\n";
   int chatHeight=markdown_layout(chat,1200);assert(chatHeight>300);assert(markdown_layout(chat,1200)==chatHeight);
   for(int offset=0;offset<chatHeight;offset+=96)markdown_draw(32,160,1200,370,offset);

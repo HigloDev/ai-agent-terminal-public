@@ -1,0 +1,20 @@
+[
+  {
+    "name": "nerv",
+    "sha256": "e05b50e5e784af270d7e3e659c659b6bb1951a5c7f591b088ba5342d857b9c55",
+    "width": 420,
+    "height": 420
+  },
+  {
+    "name": "kon",
+    "sha256": "9d9899e88a6b49dd3e9362588fa7a42b8edca62578012a97b0222870995c6b1c",
+    "width": 600,
+    "height": 200
+  },
+  {
+    "name": "pokemon",
+    "sha256": "9b356095a31f462dd8f0e123e2713158edf08749348c0c06c0641b59152b180f",
+    "width": 600,
+    "height": 220
+  }
+]
