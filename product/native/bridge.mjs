@@ -1,3 +1,4 @@
+import {receiptStatus} from './receipts.mjs';
 import {Questions} from './questions.mjs';
 import {RecentCreated} from './recent-created.mjs';
 import {rememberAudio,finishAudio} from './audio-cache.mjs';
@@ -144,7 +145,7 @@ export async function startBridge({home=path.join(os.homedir(),'.codex'),stateDi
     const thread=url.searchParams.get('thread');if(!/^[a-zA-Z0-9-]{8,79}$/.test(thread||''))throw Error('无效会话');
     const list=await questions.list(thread),q=list[0];capabilities.answer=true;
     if(!q)return res.end('GM_QUESTIONS_V1\nNONE\n');
-    const lines=[tsv([q.key,q.threadId,q.questions.length])];
+    const lines=[tsv([q.key,q.threadId,q.questions.length,q.requestId])];
     for(const item of q.questions){lines.push(tsv(['Q',item.header,item.question,item.custom?'1':'0',item.options.length]));for(const o of item.options)lines.push(tsv(['O',o.label,o.description]));}
     return res.end('GM_QUESTIONS_V1\n'+lines.join('\n')+'\n');
    }
@@ -168,10 +169,7 @@ export async function startBridge({home=path.join(os.homedir(),'.codex'),stateDi
    }
    if(req.method==='GET'&&url.pathname==='/receipt'){
     const id=url.searchParams.get('request'),threadId=url.searchParams.get('thread'),kind=url.searchParams.get('kind');
-    if(!/^[a-zA-Z0-9-]{8,100}$/.test(id||'')||!/^[a-zA-Z0-9-]{8,100}$/.test(threadId||'')||!['send','create'].includes(kind))throw Error('无效回执标识');
-    let receipt;try{receipt=JSON.parse(await fs.readFile(path.join(stateDir,kind==='create'?'creation-receipts':'receipts',id+'.json'),'utf8'));}catch{}
-    if(receipt?.state==='sent'&&receipt.threadId===threadId)return res.end('OK\nSENT\n'+(kind==='create'?receipt.result.threadId:threadId));
-    return res.end('OK\nUNKNOWN');
+    return res.end(await receiptStatus(stateDir,{id,threadId,kind}));
    }
    if(req.method==='POST'&&url.pathname==='/create'){
     if(Date.now()-cacheAt>2000)await refresh();

@@ -1,0 +1,3 @@
+These four original SVG icons come from `@mdi/svg` 7.4.47, the Material Design Icons package maintained by Pictogrammers. Source: https://github.com/Templarian/MaterialDesign-SVG . The complete package license is retained in LICENSE.
+
+The native client uses guitar-pick-outline and a small music-note for K-ON!, pokeball and book-information-variant for Pokémon. They are compact interface markers, distinct from the exact original brand Logos retained under skins/original. Default UI icons remain Feather. EVA uses the existing command glyph with clipped borders and fine strips. No character images or approximate brand logos are drawn.

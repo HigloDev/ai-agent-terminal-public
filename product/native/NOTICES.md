@@ -23,3 +23,5 @@ package-lock.json 锁定实际 npm 依赖。安装分发由各 npm 包提供；�
 本机 FunASR、PyTorch、CUDA 及中文 ASR/VAD 模型依赖各自发行包和模型许可。没有把环境、模型权重或用户音频放入交付包。
 
 UI 0.5.2 uses Feather 4.29.2 (MIT, vendor/feather/LICENSE) and Noto Sans SC (SIL OFL, fonts/OFL.txt). Official distributions: https://github.com/feathericons/feather and https://fonts.google.com/noto/specimen/Noto+Sans+SC . Fonts are bundled unmodified; icons are rasterized from the original SVGs.
+
+The optional theme interface markers use four Material Design Icons from @mdi/svg 7.4.47, maintained by Pictogrammers (Apache-2.0; original SVGs, package metadata, sources and complete license in vendor/mdi). Brand Logos are separate exact source assets and are not covered by the project's GPL-3.0-only license; their sources and unresolved redistribution status are documented in skins/SOURCES.md.
