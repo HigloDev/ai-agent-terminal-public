@@ -85,6 +85,13 @@ Thumbs.db
 !/docs/handheld-codex-1.0/
 !/docs/PUBLIC_READINESS.md
 !/docs/DEVELOPER_SETUP.md
+!/docs/index.html
+!/docs/site.css
+!/docs/site.js
+!/docs/.nojekyll
+!/docs/SITE_ASSETS.md
+!/docs/SITE_VALIDATION.md
+!/docs/site-assets/
 /AGENT_CONSOLE_MASTER_PROMPT.md
 /MANUAL_MIMO_CODEX_WORKFLOW.md
 /MIMO_BATCH_00.md

@@ -1,0 +1,141 @@
+{
+  "source_commit": "88b878f310e1d17f464507d685b3d31ef5e7bb23",
+  "render_command": "sh product/native/render-fixtures.sh",
+  "synthetic_data": true,
+  "real_device": false,
+  "pixel_lossless": true,
+  "assets": [
+    {
+      "asset": "default-reading.webp",
+      "fixture": "skin0-chat-latest.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 34776,
+      "sha256": "36da7029272249bf4040588a404b75099373e135546850ad56be01e1f0084816",
+      "source_png_sha256": "8464bae1caadcac04fd88f34f42dfc37292b88ddb0341d2c1bbc2b89719eb6e3"
+    },
+    {
+      "asset": "default-draft.webp",
+      "fixture": "skin0-draft-drawer.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 47598,
+      "sha256": "a3b1f9b565f17bf171643a45daf93e181095c7d9d8574322f7bdfc23074578cc",
+      "source_png_sha256": "be00132e7f16c99bd1303a318c7477352c8ab4a1ee40514440f46e1f1be988e9"
+    },
+    {
+      "asset": "default-artifact.webp",
+      "fixture": "skin0-file-diff.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 18802,
+      "sha256": "b973d9ede893b6f0821fc6535a5046e5ec5c57d18327819c7147f7385a2a69ea",
+      "source_png_sha256": "65e48cd920a27c22640ce773c6a42c371e27cde27a0dbe503f3d29952a5edd55"
+    },
+    {
+      "asset": "eva-reading.webp",
+      "fixture": "skin1-chat-latest.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 42866,
+      "sha256": "dfba77f074fb5b7734ccfa769b5acffbc8ee61357413d4fe0ff0f94f1ef312e1",
+      "source_png_sha256": "259087b021e90fd09fbfce3158b0f3563546c3588165cbe83d7ead1f455bced6"
+    },
+    {
+      "asset": "eva-draft.webp",
+      "fixture": "skin1-draft-drawer.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 54236,
+      "sha256": "a723747f2b8d1c840306275ed9883254f7121d67bd35395f1df1fa1d3caa489b",
+      "source_png_sha256": "679de3bbcd9ff9470122e20168d1fdbffbf821fef8625f6f5d246af200363d35"
+    },
+    {
+      "asset": "eva-artifact.webp",
+      "fixture": "skin1-file-diff.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 23566,
+      "sha256": "a41c5401877d91b5bde0ec3302350ed702d842ad5d8761dfc44ee6e9b7ec8147",
+      "source_png_sha256": "f927b6010f1ea8296e0a59054562e8c26c85f23d0f10752fb2dba18b9004107b"
+    },
+    {
+      "asset": "kon-reading.webp",
+      "fixture": "skin2-chat-latest.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 42902,
+      "sha256": "33e80d3b402e7077cb7b43253d16ff3a4525cc94cd15d5c1511ec9d064325f3f",
+      "source_png_sha256": "f8cbd560bb86e5e7c93a6c321e150fa950693835dd11b85f4ccba12e54e5225a"
+    },
+    {
+      "asset": "kon-draft.webp",
+      "fixture": "skin2-draft-drawer.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 56376,
+      "sha256": "36aa11b5dc5ecb5d5b065f580f9fe02c376d997e355dad8d9658b3b286892d24",
+      "source_png_sha256": "d5bd70f283b1d64bdf56629328908223c741f2e08e666984e3d1bfb828f64ead"
+    },
+    {
+      "asset": "kon-artifact.webp",
+      "fixture": "skin2-file-diff.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 21860,
+      "sha256": "b4ae46d97a395183dc1d8ecd2da94f8df709cb201d07cab3e37d15becdc6989a",
+      "source_png_sha256": "0f8a0d736545763e77293096f6efdfdada2daf87f1110363b0f241976db012be"
+    },
+    {
+      "asset": "pokemon-reading.webp",
+      "fixture": "skin3-chat-latest.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 52302,
+      "sha256": "0d32d0b800a4fc8561e049d651efc68ef7f9109b0be725af5bcbaf9e78fcc740",
+      "source_png_sha256": "2565f71e97335c27d88534f28f4575f7bc82fa7e77e2af1904abcd35aa9102bc"
+    },
+    {
+      "asset": "pokemon-draft.webp",
+      "fixture": "skin3-draft-drawer.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 66530,
+      "sha256": "5ad537d18257bca98dba597412dc05fb0e3235574dc2b3601f3bd0690bf451d9",
+      "source_png_sha256": "6ac15d10440e8b4758f996e4fc6c3523793f5d282556382776cf26f31d8485ca"
+    },
+    {
+      "asset": "pokemon-artifact.webp",
+      "fixture": "skin3-file-diff.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 23774,
+      "sha256": "bfcf119016c20fe7338cbdf2580bd3106da492e95ef40b9bbe4fd36461fcf877",
+      "source_png_sha256": "2c6c020186d5769ceb7f2ec2dd0059e0854baa96e5d2175d099d055b4b84fb0f"
+    }
+  ]
+}
