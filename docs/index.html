@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f2eb">
+  <meta name="description" content="AI Agent Terminal 掌上助手：面向 TRIMUI Smart Pro 的原生 AI Agent 随身阅读与实体按键、语音输入终端。开源开发者预览。">
+  <meta property="og:title" content="AI Agent Terminal — 把 AI 的下一步，握在手里。">
+  <meta property="og:description" content="桌面继续工作，掌机接住思路。探索真实界面、四套外观与开源开发者预览。">
+  <meta property="og:type" content="website">
+  <title>AI Agent Terminal · 把 AI 的下一步，握在手里</title>
+  <link rel="icon" href="./site-assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="./site-assets/terminal-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./site.css">
+  <script src="./site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="header wrap">
+    <a class="brand" href="#" aria-label="AI Agent Terminal 首页"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>AI AGENT<br><strong>TERMINAL</strong></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation"><span>菜单</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+    <nav id="navigation" aria-label="主导航">
+      <a href="#experience">使用体验</a><a href="#connection">如何连接</a><a href="#status">项目状态</a><a href="#start">开始探索</a>
+      <a class="nav-github" href="https://github.com/HigloDev/ai-agent-terminal-public">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> 掌上助手 <span class="eyebrow-divider">/</span> OPEN SOURCE TERMINAL</p>
+        <h1 id="hero-title">把 AI 的下一步，<br>握在<span class="hand-word">手里<svg viewBox="0 0 190 15" preserveAspectRatio="none" aria-hidden="true"><path d="M2 10Q95 -3 188 8"/></svg></span>。</h1>
+      </div>
+      <div class="hero-intro">
+        <p>电脑上的 Agent 继续工作。<br>在掌机上读进展、看成果，<br>用实体按键和语音接住下一步。</p>
+        <div class="hero-links"><a class="button dark" href="#experience">探索真实界面 <span aria-hidden="true">↓</span></a><a class="text-link" href="https://github.com/HigloDev/ai-agent-terminal-public">查看源码 ↗</a></div>
+        <p class="preview-note">面向 TRIMUI Smart Pro · 开发者源码预览</p>
+      </div>
+    </section>
+    <section class="product-stage" aria-label="四套掌机界面预览">
+      <div class="stage-top wrap"><p><span class="live-dot" aria-hidden="true"></span> THE DESKTOP, IN YOUR HANDS</p><span>01 / 原生界面</span></div>
+      <div class="device" aria-label="原创掌机展示框，屏幕内为实际程序渲染图">
+        <div class="device-side left-side" aria-hidden="true"><div class="dpad"><i></i><b></b></div><div class="joystick"></div><div class="speaker"></div><span class="device-mini">SELECT</span></div>
+        <button class="device-screen image-open" type="button" aria-label="放大查看默认皮肤阅读截图"><img id="hero-screen" src="./site-assets/default-reading.webp" alt="默认皮肤：原生掌机程序的会话阅读界面，合成对话" width="1280" height="720" fetchpriority="high"><span class="screen-hint">查看原图 <span aria-hidden="true">↗</span></span></button>
+        <div class="device-side right-side" aria-hidden="true"><div class="face-buttons"><i class="key-y">Y</i><i class="key-x">X</i><i class="key-b">B</i><i class="key-a">A</i></div><div class="joystick"></div><div class="speaker"></div><span class="device-mini">START</span></div>
+        <span class="device-name" aria-hidden="true">AI AGENT TERMINAL</span>
+      </div>
+      <div class="stage-bottom wrap">
+        <div class="skin-selector" role="group" aria-label="选择预览皮肤">
+          <button type="button" class="skin-button active" data-skin="default" aria-pressed="true"><i class="swatch default-swatch" aria-hidden="true"></i>默认</button>
+          <button type="button" class="skin-button" data-skin="eva" aria-pressed="false"><i class="swatch eva-swatch" aria-hidden="true"></i>EVA / NERV</button>
+          <button type="button" class="skin-button" data-skin="kon" aria-pressed="false"><i class="swatch kon-swatch" aria-hidden="true"></i>K-ON!</button>
+          <button type="button" class="skin-button" data-skin="pokemon" aria-pressed="false"><i class="swatch pokemon-swatch" aria-hidden="true"></i>Pokémon</button>
+        </div>
+        <p class="stage-caption">实际程序渲染 · 合成数据<br>掌机外框为原创展示示意，非实机照片</p>
+      </div>
+      <p id="skin-status" class="sr-only" aria-live="polite"></p>
+    </section>
+    <div class="spec-strip wrap" aria-label="产品定位">
+      <p><span>01</span> 桌面会话，随身阅读</p><p><span>02</span> 实体按键，认真核对</p><p><span>03</span> 局域网连接，本地桥接</p>
+    </div>
+    <section id="experience" class="experience wrap section-space" aria-labelledby="experience-title">
+      <div class="section-heading"><p class="eyebrow">01 / 体验</p><h2 id="experience-title">任务在电脑上跑。<br>思路，随身接着走。</h2><p class="section-deck">把注意力留给对话。紧凑的全宽正文、明确的按键提示，<br class="desktop-break">让一块 1280 × 720 的屏幕，装下正在发生的工作。</p></div>
+      <div class="experience-grid">
+        <div class="scene-visual">
+          <div class="scene-toolbar"><span><i class="live-dot" aria-hidden="true"></i> NATIVE UI / <span id="scene-theme">默认</span></span><button class="scene-enlarge image-open" type="button" aria-label="放大查看当前场景截图">查看原图 ↗</button></div>
+          <button class="scene-image image-open" type="button" aria-label="放大查看阅读进展截图"><img id="scene-screen" src="./site-assets/default-reading.webp" width="1280" height="720" alt="默认皮肤阅读进展场景，实际程序渲染，合成数据" loading="lazy"></button>
+          <p class="image-footnote">真实渲染图 / 界面预览来自四皮肤开发分支</p>
+        </div>
+        <div class="scene-detail">
+          <div class="scene-tabs" role="tablist" aria-label="探索使用场景" aria-orientation="vertical">
+            <button type="button" role="tab" id="tab-reading" data-scene="reading" aria-selected="true" aria-controls="scene-panel" tabindex="0"><span>01</span>阅读进展 <span aria-hidden="true">↗</span></button>
+            <button type="button" role="tab" id="tab-draft" data-scene="draft" aria-selected="false" aria-controls="scene-panel" tabindex="-1"><span>02</span>核对草稿 <span aria-hidden="true">↗</span></button>
+            <button type="button" role="tab" id="tab-artifact" data-scene="artifact" aria-selected="false" aria-controls="scene-panel" tabindex="-1"><span>03</span>查看成果 <span aria-hidden="true">↗</span></button>
+          </div>
+          <div id="scene-panel" role="tabpanel" aria-labelledby="tab-reading" tabindex="0"><p class="scene-kicker" id="scene-kicker">把正文放在中心</p><h3 id="scene-title">读得下，<br>也跟得上。</h3><p id="scene-description">打开原会话，阅读最新回复与历史内容。左杆慢滚、右杆快滚，代码与长文本都有自己的阅读空间。</p><div class="key-guide" id="scene-keys"><kbd>左杆</kbd><span>慢滚</span><kbd>右杆</kbd><span>快滚</span></div></div>
+        </div>
+      </div>
+      <div class="experience-note"><span aria-hidden="true">↳</span><p>这里展示的是界面与操作设计。录音识别、桌面联动与这轮改版的真机体验仍待验收。</p><a class="text-link" href="https://github.com/HigloDev/ai-agent-terminal-public/pull/1">四皮肤改版 PR ↗</a></div>
+    </section>
+    <section id="connection" class="connection section-space" aria-labelledby="connection-title">
+      <div class="wrap">
+        <div class="connection-heading"><div><p class="eyebrow">02 / 连接</p><h2 id="connection-title">桌面负责执行。<br>掌机负责在场。</h2></div><p>它是已有桌面会话的随身终端。<br>电脑运行 Codex Desktop 与本地桥接，<br>掌机通过局域网连接自己配对的电脑。</p></div>
+        <div class="connection-diagram" aria-label="Codex Desktop 经电脑本地桥接，通过局域网连接原生掌机客户端">
+          <div class="connection-node"><span class="node-label">01 / DESKTOP</span><svg class="laptop-icon" viewBox="0 0 160 105" aria-hidden="true"><rect x="22" y="7" width="116" height="77" rx="5"/><path d="M5 92h150l-10 7H15zM44 34l12 10-12 10M66 55h27"/></svg><h3>你的电脑</h3><p>已有项目与原会话<br>Codex Desktop</p></div>
+          <div class="connection-route" aria-hidden="true"><span>本机接口</span><i></i><span>→</span></div>
+          <div class="connection-node bridge-node"><span class="node-label">02 / LOCAL BRIDGE</span><div class="bridge-glyph" aria-hidden="true">{ <span>↔</span> }</div><h3>本地桥接</h3><p>Node.js 桥接 · Python 语音<br>HTTPS 与已配对电脑校验</p></div>
+          <div class="connection-route" aria-hidden="true"><span>局域网</span><i></i><span>→</span></div>
+          <div class="connection-node"><span class="node-label">03 / HANDHELD</span><svg class="handheld-icon" viewBox="0 0 160 105" aria-hidden="true"><rect x="3" y="23" width="154" height="64" rx="22"/><rect x="39" y="31" width="82" height="46" rx="3"/><path d="M16 43v20M6 53h20M132 43h1M145 53h1M132 64h1"/></svg><h3>掌上助手</h3><p>TRIMUI Smart Pro<br>C / SDL2 原生客户端</p></div>
+        </div>
+        <div class="connection-footer"><p>当前接入依赖版本相关的桌面本地接口，升级后需复验兼容性。首次配对仍需手动配置。</p><a class="text-link" href="https://github.com/HigloDev/ai-agent-terminal-public/blob/main/docs/DEVELOPER_SETUP.md">阅读连接与配置说明 ↗</a></div>
+      </div>
+    </section>
+    <section id="status" class="status wrap section-space" aria-labelledby="status-title">
+      <div class="status-intro"><p class="eyebrow">03 / 当前状态</p><h2 id="status-title">开放源码。<br>也公开边界。</h2><span class="status-stamp"><i class="live-dot" aria-hidden="true"></i> 开发者源码预览</span><p>欢迎探索、复现和参与开发。<br>完整 1.0 尚未验收，当前不提供<br>已完成公开验收的二进制安装包。</p><a class="text-link" href="https://github.com/HigloDev/ai-agent-terminal-public/blob/main/docs/PUBLIC_READINESS.md">查看公开准备记录 ↗</a></div>
+      <div class="status-rows">
+        <div class="status-row"><span class="status-symbol">↗</span><div><h3>源码已经公开</h3><p>C / SDL2 客户端、本地桥接与隔离测试。原创代码以 GPL-3.0-only 许可发布。</p></div><span class="row-tag">已公开</span></div>
+        <div class="status-row"><span class="status-symbol">◐</span><div><h3>四皮肤界面改版</h3><p>默认、EVA / NERV、K-ON!、Pokémon。截图来自开发分支；Draft PR #1 尚未合并 main。</p></div><span class="row-tag">预览中</span></div>
+        <div class="status-row"><span class="status-symbol">○</span><div><h3>真机与完整语音链路</h3><p>本轮改动的掌机体验、真人录音识别、桌面联动及新电脑首次安装仍需验收。</p></div><span class="row-tag muted">待验收</span></div>
+        <div class="status-row"><span class="status-symbol">○</span><div><h3>连接与操作范围</h3><p>目前聚焦局域网。外网连接、首次配对向导、原权限审批与停止回合尚有边界。</p></div><span class="row-tag muted">有边界</span></div>
+      </div>
+    </section>
+    <section id="start" class="start section-space" aria-labelledby="start-title">
+      <div class="wrap"><div class="start-heading"><p class="eyebrow">04 / 开始探索</p><h2 id="start-title">从源码开始，<br>把下一步做出来。</h2><a class="button mint" href="https://github.com/HigloDev/ai-agent-terminal-public">前往 GitHub 仓库 <span aria-hidden="true">↗</span></a></div>
+        <ol class="start-steps"><li><span class="step-index">01</span><div><h3>先了解现状</h3><p>读开发配置与公开准备状态，确认设备、依赖和当前边界。</p><a href="https://github.com/HigloDev/ai-agent-terminal-public/blob/main/docs/DEVELOPER_SETUP.md">开发配置 ↗</a></div></li><li><span class="step-index">02</span><div><h3>在电脑上跑测试</h3><p>先复现隔离测试。无需真实会话、Token、语音模型或掌机。</p><a href="https://github.com/HigloDev/ai-agent-terminal-public/blob/main/product/native/README.md">原生客户端说明 ↗</a></div></li><li><span class="step-index">03</span><div><h3>配置自己的连接</h3><p>按文档准备编译、桥接与手动配对，再验证自己的硬件环境。</p><a href="https://github.com/HigloDev/ai-agent-terminal-public/blob/main/docs/handheld-codex-1.0/USER_GUIDE.md">使用与按键指南 ↗</a></div></li></ol>
+        <div class="code-panel"><div class="code-heading"><span>电脑端隔离测试 / Node.js ≥ 20.9 · Python 3.13</span><button id="copy-code" type="button">复制命令 <span aria-hidden="true">⧉</span></button></div><pre><code id="setup-code">git clone https://github.com/HigloDev/ai-agent-terminal-public.git
+cd ai-agent-terminal-public/product/native
+npm ci --ignore-scripts
+npm test
+python -m unittest discover -p "test_*.py"</code></pre><p id="copy-status" aria-live="polite">这些命令验证电脑端逻辑，不安装到掌机，也不代表真机与语音已验收。</p></div>
+      </div>
+    </section>
+    <section class="closing wrap"><p class="eyebrow">BUILT IN THE OPEN</p><h2>小小的终端。<br><span>正在展开的可能。</span></h2><a href="https://github.com/HigloDev/ai-agent-terminal-public/blob/main/CONTRIBUTING.md" class="text-link">一起参与开发 <span aria-hidden="true">↗</span></a></section>
+  </main>
+  <footer class="footer wrap"><div class="footer-top"><a class="brand" href="#"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>AI AGENT<br><strong>TERMINAL</strong></span></a><p>掌上助手 / 一个持续开发的开源项目</p><a class="text-link" href="https://github.com/HigloDev/ai-agent-terminal-public">GitHub ↗</a></div><div class="footer-bottom"><p>第三方项目，与 OpenAI、TRIMUI 或主题作品无官方隶属或合作关系。主题 Logo 的再分发许可尚有未核实项。</p><div><a href="https://github.com/HigloDev/ai-agent-terminal-public/blob/main/LICENSE">GPL-3.0-only</a><a href="https://github.com/HigloDev/ai-agent-terminal-public/blob/ui/handheld-four-skins-20261012/product/native/skins/SOURCES.md">主题来源与权利</a><a href="./SITE_ASSETS.md">本站资源说明</a></div></div></footer>
+  <dialog id="image-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h2 id="dialog-title">实际程序渲染图</h2><button id="dialog-close" type="button" aria-label="关闭原图">关闭 <span aria-hidden="true">×</span></button></div><img id="dialog-image" width="1280" height="720" alt=""><p>合成数据 · 原生 SDL 渲染 · 可滚动查看原始 1280 × 720 图像</p></dialog>
+  <noscript><p class="noscript-note">当前展示默认皮肤。启用 JavaScript 后可切换四套外观、探索场景和放大图片。</p></noscript>
+</body>
+</html>
