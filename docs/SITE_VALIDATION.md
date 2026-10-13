@@ -25,3 +25,7 @@
 ## 发布条件
 
 本记录确认静态站点的本地验收。GitHub Pages 的启用、构建及实际 HTTPS 访问须另外以远端平台状态确认。不得仅依据代码推送或 PR 创建将状态标为“已上线”。网站可使用 `site/product-showcase-20261013` 分支的 `/docs` 作为普通 Pages 发布来源，不需要新增 workflow。
+
+本次云端尝试中，GitHub Pages GET 与普通 branch-based POST 设置请求均返回 `Forbidden`，所以尚未启用 Pages，无法确认实际站点 URL 或部署成功。没有新增 workflow、创建凭据、扩大连接权限、修改安全设置或合并应用 PR。
+
+用户交付预览为 [桌面首屏](site-previews/desktop.png) 与 [手机首屏](site-previews/mobile.png)，均为上述真实浏览器渲染的纯产品合成数据页面。完整首屏、全页及交互验证记录另保存在本次云工作区。Library 批量保存 helper 在发现云端接口时失败（`hosted apps tools/list request failed: network`），未开始实际上传或创建原生附件；本目录保留可供后续附件保存的同一截图字节。
